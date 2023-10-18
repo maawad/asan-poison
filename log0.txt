@@ -1,0 +1,51 @@
+poisoned: 0x619000000080 -> 0x619000000480
+=================================================================
+==605487==ERROR: AddressSanitizer: use-after-poison on address 0x619000000098 at pc 0x5591d71a55e9 bp 0x7ffe9a37d020 sp 0x7ffe9a37d010
+READ of size 1 at 0x619000000098 thread T0
+    #0 0x5591d71a55e8 in main (asan-poison/asan_poison+0x25e8)
+    #1 0x7feaff2fad8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #2 0x7feaff2fae3f in __libc_start_main_impl ../csu/libc-start.c:392
+    #3 0x5591d71a53c4 in _start (asan-poison/asan_poison+0x23c4)
+
+0x619000000098 is located 24 bytes inside of 1024-byte region [0x619000000080,0x619000000480)
+allocated by thread T0 here:
+    #0 0x7feaff8e0337 in operator new[](unsigned long) ../../../../src/libsanitizer/asan/asan_new_delete.cpp:102
+    #1 0x5591d71a5b57 in std::_MakeUniq<std::byte []>::__array std::make_unique<std::byte []>(unsigned long) (asan-poison/asan_poison+0x2b57)
+    #2 0x5591d71a585f in allocator::allocator(unsigned long) (asan-poison/asan_poison+0x285f)
+    #3 0x5591d71a5540 in main (asan-poison/asan_poison+0x2540)
+    #4 0x7feaff2fad8f in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+
+SUMMARY: AddressSanitizer: use-after-poison (asan-poison/asan_poison+0x25e8) in main
+Shadow bytes around the buggy address:
+  0x0c327fff7fc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff7fd0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c327fff8000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+=>0x0c327fff8010: f7 f7 00[f7]f7 00 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+  0x0c327fff8020: f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+  0x0c327fff8030: f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+  0x0c327fff8040: f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+  0x0c327fff8050: f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+  0x0c327fff8060: f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7 f7
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+  Shadow gap:              cc
+==605487==ABORTING
